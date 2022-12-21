@@ -1,20 +1,32 @@
-import React from "react";
+import { Card } from '../../components/Card'
+import styled from 'styled-components';
 
 interface Props {
-    todos: any[],
-    deleteButtonHandler: Function,
-    addButtonHandler: Function,
+    title: string,
+    data: object[],
 }
 
-export const TodoList: React.FC<Props> = ({ todos, deleteButtonHandler, addButtonHandler }) => {
+export const DataList: React.FC<Props> = ({ title, data }) => {
+
+    const StyledListWrapper = styled.div`
+    width: 50%;
+    text-align: center;
+    `
+    const StyledList = styled.ul`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    `
+
     return (
-        <>
-            <h2>To do List</h2>
-            <ul className='to-do-list'>
-                {todos.map(todo => <li key={todo.id}><div>{todo.title}</div>
-                    <button onClick={() => deleteButtonHandler(todo)}>Delete</button>
-                    <button onClick={() => addButtonHandler(todo)}>Add</button></li>)}
-            </ul>
-        </>
+        <StyledListWrapper>
+            <h2>{title}</h2>
+            <StyledList>
+                {data.map((card: any) => <Card card={card} />)}
+            </StyledList>
+        </StyledListWrapper>
     )
 }

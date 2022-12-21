@@ -2,6 +2,8 @@ import React, { MouseEventHandler, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useAppDispatch } from "../../app/hooks";
 import { todoAdded } from "./todosSlice";
+import { Button } from '../../components/Button'
+import styled from 'styled-components';
 
 interface Todo {
     userId: string,
@@ -9,6 +11,22 @@ interface Todo {
     title: string,
     completed: boolean,
 }
+
+const TodoInputWrapper = styled.div`
+display: flex;
+gap: 50px;
+padding: 50px;
+    `
+
+const StyledInput = styled.input`
+display: flex;
+padding: 20px;
+width: 500px;
+border-radius: 5px;
+border: 1px solid grey;
+font-size: 20px;
+    `
+
 
 export const TodoInput: React.FC = () => {
     const [input, setInput] = useState<string>('');
@@ -38,9 +56,9 @@ export const TodoInput: React.FC = () => {
     }
 
     return (
-        <div className='main-input'>
-            <input onChange={inputChangeHandler} value={input} type="text" />
-            <button onClick={addTodo}>Добавить</button>
-        </div>
+        <TodoInputWrapper className='main-input'>
+            <StyledInput onChange={inputChangeHandler} value={input} type="text" />
+            <Button onClick={addTodo} icon='add' />
+        </TodoInputWrapper>
     )
 }

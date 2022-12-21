@@ -11,20 +11,13 @@ interface Props {
 export const Card: React.FC<Props> = ({ card }) => {
     const dispatch = useAppDispatch()
 
-    const addButtonHandler = (card: any) => {
-
-        if (card.completed) {
-            card = { ...card, completed: false }
-        }
-        else {
-            card = { ...card, completed: true }
-        }
-    }
+    const deleteCard = () => dispatch(cardDeleted(card))
+    const changeStatus = () => dispatch(cardStatusChanged(card))
 
     return (
         <li key={card.id}>
             <div>{card.title}</div>
-            <button onClick={() => dispatch(cardDeleted(card))}>Удалить</button>
-            <button onClick={() => dispatch(cardStatusChanged(card))}>Изменить статус</button>
+            <button onClick={deleteCard}>Удалить</button>
+            <button onClick={changeStatus}>Изменить статус</button>
         </li>)
 }

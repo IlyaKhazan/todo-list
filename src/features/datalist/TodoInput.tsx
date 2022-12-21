@@ -18,7 +18,7 @@ export const TodoInput: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const buttonHandler: MouseEventHandler = () => {
+    const addTodo: MouseEventHandler = () => {
         const createTodo = (value: string) => {
             const todoObj: Todo = {
                 userId: nanoid(),
@@ -40,7 +40,7 @@ export const TodoInput: React.FC = () => {
     return (
         <div className='main-input'>
             <input onChange={inputChangeHandler} value={input} type="text" />
-            <button onClick={buttonHandler}>Добавить</button>
+            <button onClick={addTodo}>Добавить</button>
         </div>
     )
 }

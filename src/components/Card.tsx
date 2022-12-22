@@ -44,7 +44,7 @@ transition: 0.4s ease-out;
         `
 
     return (
-        <StyledCard key={card.id}>
+        <StyledCard>
             <div>{card.title}</div>
             <StyledButtonWrapper>
                 <Button onClick={deleteCard} icon='delete' />

@@ -21,8 +21,6 @@ const todosSlice = createSlice({
         },
         cardDeleted(state, action) {
             state.todos = state.todos.filter((item: any) => { return item.id !== action.payload.id })
-            console.log('d', action)
-            console.log(current(state))
         },
         cardStatusChanged(state, action) {
             if (action.payload.completed) {
@@ -31,7 +29,8 @@ const todosSlice = createSlice({
             else {
                 action.payload = { ...action.payload, completed: true }
             }
-            state.todos.push(action.payload)
+            state.todos = state.todos.filter((item: any) => { return item.id !== action.payload.id })
+            state.todos.push(action.payload);
         }
     },
     extraReducers(builder) {

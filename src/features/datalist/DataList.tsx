@@ -1,5 +1,6 @@
 import { Card } from '../../components/Card'
 import styled from 'styled-components';
+import { nanoid } from '@reduxjs/toolkit';
 
 interface Props {
     title: string,
@@ -25,7 +26,7 @@ export const DataList: React.FC<Props> = ({ title, data }) => {
         <StyledListWrapper>
             <h2>{title}</h2>
             <StyledList>
-                {data.map((card: any) => <Card card={card} />)}
+                {data.map((card: any) => <Card card={card} key={nanoid()} />)}
             </StyledList>
         </StyledListWrapper>
     )

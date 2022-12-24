@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getData());
-  }, [dispatch])
+  }, [])
 
 
   const StyledContainer = styled.div`

@@ -1,35 +1,51 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Todo } from "../../types";
 
-const initialState: any = {
+
+interface TodosState {
+    todos: Todo[],
+    status: 'idle' | 'loading' | 'succeeded' | 'failed',
+    error: string | null,
+}
+
+const initialState: TodosState = {
     todos: [],
     status: 'idle',
     error: null,
 };
 
-export const getData = createAsyncThunk('todos/getData', async () => {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/todos');
-    return response.data
-});
+const DATA_URL = 'https://jsonplaceholder.typicode.com/todos'
+
+export const getData = createAsyncThunk<Todo[]>(
+    'todos/getData', async () => {
+        try {
+            const response = await axios.get(DATA_URL);
+            return response.data
+        }
+        catch (error) {
+            alert(error)
+        }
+    });
 
 const todosSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        todoAdded(state, action) {
+        todoAdded(state, action: PayloadAction<Todo>) {
             state.todos.push(action.payload)
         },
-        cardDeleted(state, action) {
-            state.todos = state.todos.filter((item: any) => { return item.id !== action.payload.id })
+        cardDeleted(state, action: PayloadAction<Todo>) {
+            state.todos = state.todos.filter((item: Todo): boolean => { return item.id !== action.payload.id })
         },
-        cardStatusChanged(state, action) {
+        cardStatusChanged(state, action: PayloadAction<Todo>) {
             if (action.payload.completed) {
                 action.payload = { ...action.payload, completed: false }
             }
             else {
                 action.payload = { ...action.payload, completed: true }
             }
-            state.todos = state.todos.filter((item: any) => { return item.id !== action.payload.id })
+            state.todos = state.todos.filter((item: Todo): boolean => { return item.id !== action.payload.id })
             state.todos.push(action.payload);
         }
     },
@@ -41,13 +57,12 @@ const todosSlice = createSlice({
             state.todos = state.todos.concat(action.payload).splice(0, 15)
         }).addCase(getData.rejected, (state, action) => {
             state.status = 'failed'
-            state.error = action.error.message
+
         })
     }
 })
 
-
 export const { todoAdded, cardDeleted, cardStatusChanged } = todosSlice.actions;
 export default todosSlice.reducer
 
-export const selectAllTodos = (state: any) => state.todos.todos;
+export const selectAllTodos = (state: { todos: TodosState }) => state.todos.todos;

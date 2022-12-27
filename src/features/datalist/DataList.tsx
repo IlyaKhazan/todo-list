@@ -1,33 +1,21 @@
-import { Card } from '../../components/Card'
-import styled from 'styled-components';
 import { nanoid } from '@reduxjs/toolkit';
+import { Card } from '../../components/Card'
+import { Todo } from '../../types';
+import { List, ListWrapper } from '../../wrapper'
 
-interface Props {
+interface DatalistProps {
     title: string,
-    data: object[],
+    data: Todo[],
 }
 
-export const DataList: React.FC<Props> = ({ title, data }) => {
-
-    const StyledListWrapper = styled.div`
-    width: 50%;
-    text-align: center;
-    `
-    const StyledList = styled.ul`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    `
+export const DataList = ({ title, data }: DatalistProps) => {
 
     return (
-        <StyledListWrapper>
+        <ListWrapper>
             <h2>{title}</h2>
-            <StyledList>
-                {data.map((card: any) => <Card card={card} key={nanoid()} />)}
-            </StyledList>
-        </StyledListWrapper>
+            <List>
+                {data.map((card: Todo) => <Card key={nanoid()} card={card} />)}
+            </List>
+        </ListWrapper>
     )
 }

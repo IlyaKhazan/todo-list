@@ -1,33 +1,23 @@
-import React from "react";
-import styled from 'styled-components';
+import React, { ReactNode } from "react";
 import { DeleteIcon } from './icons/DeleteIcon'
 import { StatusIcon } from "./icons/StatusIcon";
 import { AddIcon } from "./icons/AddIcon";
 import { Values } from '../types';
+import { Icons } from '../../src/types'
+import { StyledButton } from '../wrapper'
 
-const Icon = {
-    DEL: 'delete',
-    STATUS: 'status',
-    ADD: 'add'
-} as const;
 
-interface Props {
+interface ButtonProps {
     onClick: any,
-    icon: Values<typeof Icon>;
+    icon: Values<typeof Icons>
 }
 
-export const Button: React.FC<Props> = ({ onClick, icon }) => {
+export const Button: React.FC<ButtonProps> = ({ onClick, icon }) => {
 
-    const StyledButton = styled.button`
-    background: transparent;
-    cursor: pointer;
-    border: none;
-    `
-
-    const getIcon = (icon: string) => {
-        if (icon === Icon.DEL) return <DeleteIcon />;
-        if (icon === Icon.STATUS) return <StatusIcon />;
-        return (icon === Icon.ADD) ? <AddIcon /> : null;
+    const getIcon = (icon: string): ReactNode => {
+        if (icon === Icons.DEL) return <DeleteIcon />;
+        if (icon === Icons.STATUS) return <StatusIcon />;
+        return (icon === Icons.ADD) ? <AddIcon /> : null;
 
     };
 

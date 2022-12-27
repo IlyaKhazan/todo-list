@@ -1,3 +1,5 @@
-export const filterCards = (cards: any[], boolean: boolean) => {
-    return cards.filter(card => { return card.completed === boolean })
+import { Todo } from '../src/types'
+
+export const filterCards = (cards: Todo[], boolean: boolean): Todo[] => {
+    return cards.filter((card): boolean => { return card.completed === boolean })
 }

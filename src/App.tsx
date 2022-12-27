@@ -1,12 +1,10 @@
-import { DataList } from './features/datalist/DataList';
-import { TodoInput } from './features/datalist/TodoInput';
-import { selectAllTodos } from './features/datalist/todosSlice';
-import { filterCards } from './util';
-import { getData } from './features/datalist/todosSlice';
-import { useAppDispatch } from './app/hooks';
-import { useAppSelector } from './app/hooks';
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import { DataList } from './features/datalist/DataList';
+import { TodoInput } from '../src/components/TodoInput'
+import { selectAllTodos, getData } from './features/datalist/todosSlice';
+import { filterCards } from './util';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { Container, Lists } from '../src/wrapper'
 
 function App() {
   const cards = useAppSelector(selectAllTodos)
@@ -16,27 +14,16 @@ function App() {
 
   useEffect(() => {
     dispatch(getData());
-  }, [])
-
-
-  const StyledContainer = styled.div`
-  padding: 50px;
-  display: grid;
-  justify-items: center;
-  `
-  const StyledLists = styled.div`
-  display: flex;
-  gap: 50px;
-  `
+  }, [dispatch])
 
   return (
-    <StyledContainer>
+    <Container>
       <TodoInput />
-      <StyledLists>
-        <DataList title='Todo' data={doneCards} />
-        <DataList title='Done' data={todoCards} />
-      </StyledLists>
-    </StyledContainer>
+      <Lists>
+        <DataList title='Todo' data={todoCards} />
+        <DataList title='Done' data={doneCards} />
+      </Lists>
+    </Container>
   );
 }
 
